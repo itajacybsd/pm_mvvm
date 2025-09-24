@@ -34,3 +34,9 @@ extension ResultException on Exception {
     return Result.error(this);
   }
 }
+
+extension ResultCasting<T extends Object> on Result<T> {
+  Ok<T> get asOk => this as Ok<T>;
+
+  Error<T> get asError => this as Error<T>;
+}
