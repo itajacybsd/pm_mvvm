@@ -22,3 +22,15 @@ final class Error<T extends Object> extends Result<T> {
   Error._(this.error); // construtor interno
   // não é possível criar instâncias de Error fora do arquivo result.dart
 }
+
+extension ResultExtension on Object {
+  Result ok() {
+    return Result.ok(this);
+  }
+}
+
+extension ResultException on Exception {
+  Result error() {
+    return Result.error(this);
+  }
+}

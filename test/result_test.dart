@@ -15,5 +15,19 @@ void main() {
       // expect(result, "Ok"); // dá erro pq o result é do tipo Result, não String
       expect((result as Error).error, isA<Exception>());
     });
+
+    test("Should create a Ok Result with Extension", () {
+      final result = "Ok".ok();
+
+      // expect(result, "Ok"); // dá erro pq o result é do tipo Result, não String
+      expect((result as Ok).value, "Ok");
+    });
+
+    test("Should create a Error Result with Extension", () {
+      final result = Exception("Ocorreu um erro").error();
+
+      // expect(result, "Ok"); // dá erro pq o result é do tipo Result, não String
+      expect((result as Error).error, isA<Exception>());
+    });
   });
 }
