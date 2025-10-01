@@ -40,3 +40,29 @@ extension ResultCasting<T extends Object> on Result<T> {
 
   Error<T> get asError => this as Error<T>;
 }
+
+// // exemplo de uso:
+// Result isPar(int number) {
+//   if(number %2 ==0) {
+//     // return Result.ok('Par');
+//     return 'Par'.ok();
+
+//   } else {
+//     // return Result.error(Exception('Impar'));
+//     return Exception('Impar').error();
+//   }
+// }
+
+// void main() {
+//   final resultado = isPar(2);
+
+//   if (resultado is Ok) {
+//     print('Resultado: ${resultado.asOk.value  } \n');
+//     print('Resultado: ${(resultado as Ok).value  }');
+    
+//   } else {
+//     print('Resultado: ${resultado.asError.error } \n');
+//     print('Resultado: ${(resultado as Error).error }');
+    
+//   }
+// }
