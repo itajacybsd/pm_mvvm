@@ -1,6 +1,7 @@
 // typedef CommandAction0<T extends Object>
 
 // o T é o tipo de retorno do comando, ou seja, o Output
+import 'package:flutter/widgets.dart';
 import 'package:pm_mvvm/core/result/result.dart';
 
 //! Command 0 não possui parâmetros de entrada
@@ -11,7 +12,7 @@ typedef CommandAction0<Output extends Object> =
 typedef CommandAction1<Output extends Object, Input extends Object> =
     Future<Result<Output>> Function(Input);
 
-abstract class Command<Output extends Object> {
+abstract class Command<Output extends Object> extends ChangeNotifier{
   // verifica se o comando está em execução
   bool _running = false;
   bool get running => _running;
@@ -31,8 +32,19 @@ abstract class Command<Output extends Object> {
   Future<void> _execute(CommandAction0<Output> action) async {
     // Impede que a action seja reexecutada mais uma vez simultaneamente
     if (_running) return; // se já estiver em execução, não faz nada
+
+    // Agora nossa action está em execução
     _running = true; // marca como em execução
+    // Result voltou para nulo
     _result = null; // limpa o estado anterior
-    
+    notifyListeners(); // notifica os ouvintes sobre a mudança de estado
+
+    try {
+      _result = await action(); // executa a action e aguarda o resultado
+
+    } finally {
+      _running = false; // marca como não em execução
+      notifyListeners(); // notifica os ouvintes sobre a mudança de estado
+    }
   }
 }
