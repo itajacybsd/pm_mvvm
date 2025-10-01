@@ -9,12 +9,15 @@ class TodoViewmodel extends ChangeNotifier {
 
   late Command1<Todo, String> addTodo;
 
+  late Command1<String, Todo> deleteTodo;
+
   TodoViewmodel() {
     // load = Command0(_load);
     // load.execute();
 
     load = Command0(_load)..execute();
     addTodo = Command1(_addTodo);
+    deleteTodo = Command1(_deleteTodo);
   }
 
   List<Todo> _todos = [];
@@ -40,5 +43,12 @@ class TodoViewmodel extends ChangeNotifier {
 
     notifyListeners();
     return Result.ok(createdTodo);
+  }
+
+  Future<Result<String>> _deleteTodo(Todo todo) async {
+    await Future.delayed(const Duration(seconds: 1));
+    _todos.remove(todo);
+    notifyListeners();
+    return Result.ok("Removido com sucesso.");
   }
 }
