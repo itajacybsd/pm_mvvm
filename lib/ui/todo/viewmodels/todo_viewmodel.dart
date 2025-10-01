@@ -7,11 +7,14 @@ class TodoViewmodel extends ChangeNotifier {
   // quando a classe for instanciada, que a lista de Todo seja carregada
   late Command0 load;
 
+  late Command1<Todo, String> addTodo;
+
   TodoViewmodel() {
     // load = Command0(_load);
     // load.execute();
 
     load = Command0(_load)..execute();
+    addTodo = Command1(_addTodo);
   }
 
   List<Todo> _todos = [];
@@ -26,5 +29,16 @@ class TodoViewmodel extends ChangeNotifier {
 
     notifyListeners();
     return Result.ok(todos);
+  }
+
+  Future<Result<Todo>> _addTodo(String name) async {
+    final lastTodoIndex = _todos.length;
+
+    final createdTodo = Todo(id: lastTodoIndex + 1, name: name);
+
+    _todos.add(createdTodo);
+
+    notifyListeners();
+    return Result.ok(createdTodo);
   }
 }
