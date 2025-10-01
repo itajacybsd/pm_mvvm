@@ -4,18 +4,35 @@
 import 'package:pm_mvvm/core/result/result.dart';
 
 //! Command 0 não possui parâmetros de entrada
-typedef CommandAction0<Output extends Object> = Future<Result<Output>> Function();
+typedef CommandAction0<Output extends Object> =
+    Future<Result<Output>> Function();
 
 //! Command 1 possui 1 parâmetro de entrada
-typedef CommandAction1<Output extends Object, Input extends Object> = Future<Result<Output>> Function(Input);
-
-
+typedef CommandAction1<Output extends Object, Input extends Object> =
+    Future<Result<Output>> Function(Input);
 
 abstract class Command<Output extends Object> {
+  // verifica se o comando está em execução
   bool _running = false;
-  Result<Output>? _result;
+  bool get running => _running;
 
+  // representação do nosso estado => Ok ou Error, ou Null
+  Result<Output>? _result;
+  Result<Output>? get result => _result;
+
+  // verifica se o nosso estado foi gerado com sucesso
   bool get completed => _result is Ok;
 
+  // verifica se o nosso estado  é de erro
   bool get error => _result is Error;
+
+  // método para executar o comando
+  // automatizar a notificação de estado
+  Future<void> _execute(CommandAction0<Output> action) async {
+    // Impede que a action seja reexecutada mais uma vez simultaneamente
+    if (_running) return; // se já estiver em execução, não faz nada
+    _running = true; // marca como em execução
+    _result = null; // limpa o estado anterior
+    
+  }
 }
