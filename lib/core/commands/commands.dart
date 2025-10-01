@@ -58,6 +58,16 @@ class Command0<Output extends Object> extends Command<Output> {
   Future<void> execute() async {
     return _execute(action);
   }
-
 }
+
+class Command1<Output extends Object, Input extends Object> extends Command<Output> {
+ final CommandAction1<Output, Input> action;
+
+ Command1(this.action);
+
+  Future<void> execute(Input params) async {
+    return _execute(() => action(params));
+  }
+}
+
 
