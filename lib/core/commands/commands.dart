@@ -48,3 +48,16 @@ abstract class Command<Output extends Object> extends ChangeNotifier{
     }
   }
 }
+
+
+class Command0<Output extends Object> extends Command<Output> {
+ final CommandAction0<Output> action;
+
+ Command0(this.action);
+
+  Future<void> execute() async {
+    return _execute(action);
+  }
+
+}
+
