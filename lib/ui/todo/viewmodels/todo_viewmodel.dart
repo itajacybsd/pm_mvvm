@@ -1,10 +1,18 @@
+import 'package:flutter/widgets.dart';
 import 'package:pm_mvvm/core/commands/commands.dart';
 import 'package:pm_mvvm/core/result/result.dart';
 import 'package:pm_mvvm/domain/models/todo.dart';
 
-class TodoViewmodel {
+class TodoViewmodel extends ChangeNotifier {
   // quando a classe for instanciada, que a lista de Todo seja carregada
   late Command0 load;
+
+  TodoViewmodel() {
+    // load = Command0(_load);
+    // load.execute();
+
+    load = Command0(_load)..execute();
+  }
 
   List<Todo> _todos = [];
   List<Todo> get todos => _todos;
@@ -12,9 +20,11 @@ class TodoViewmodel {
   Future<Result> _load() async {
     await Future.delayed(const Duration(seconds: 1));
 
-    final List<Todo>todos = [];
+    final List<Todo> todos = [];
 
     _todos = todos;
+
+    notifyListeners();
     return Result.ok(todos);
   }
 }
