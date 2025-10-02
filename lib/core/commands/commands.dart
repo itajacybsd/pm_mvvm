@@ -41,6 +41,7 @@ abstract class Command<Output extends Object> extends ChangeNotifier{
 
     try {
       _result = await action(); // executa a action e aguarda o resultado
+      print("_result: $_result");
 
     } finally {
       _running = false; // marca como não em execução

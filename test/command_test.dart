@@ -8,63 +8,63 @@ void main() {
     //! TESTES PARA COMMAND0
     test("Should teste Command0 returns Ok", () async{
         final command0 = Command0<String>(getOkResult);
-        expect(command0.completed, false) ;
         expect(command0.running, false) ;
-        expect(command0.error, false) ;
         expect(command0.result, null) ;
+        expect(command0.completed, false) ;
+        expect(command0.error, false) ;
 
         await command0.execute();
 
         expect(command0.running, false) ;
-        expect(command0.error, false) ;
         expect(command0.result, isNotNull) ;
         expect(command0.result!.asOk.value, "The operation has Success.") ;
+        expect(command0.error, false) ;
     });
     test("Should teste Command0 returns Error", () async{
         final command0 = Command0<bool>(getErrorResult);
-        expect(command0.completed, false) ;
         expect(command0.running, false) ;
-        expect(command0.error, false) ;
         expect(command0.result, null) ;
+        expect(command0.completed, false) ;
+        expect(command0.error, false) ;
 
         await command0.execute();
 
-        expect(command0.error, true) ;
         expect(command0.running, false) ;
         // expect(command0.result, isNotNull) ;
         expect(command0.result!.asError.error,isA<Exception>()) ;
+        expect(command0.error, true) ;
     });
 
     //! TESTES PARA COMMAND1
     test("Should teste Command1 Ok Result", () async{
         final command1 = Command1<String, String>(getOkResult1);
         expect(command1.running, false) ;
-        expect(command1.error, false) ;
-        expect(command1.completed, false) ;
         expect(command1.result, isNull) ;
+        expect(command1.completed, false) ;
+        expect(command1.error, false) ;
 
         await command1.execute("Parametro de entrada");
 
         expect(command1.running, false) ;
-        expect(command1.error, false) ;
-        expect(command1.completed, true) ;
         expect(command1.result, isA<Ok>()) ;
         expect(command1.result!.asOk.value, "Parametro de entrada") ;
+        expect(command1.completed, true) ;
+        expect(command1.error, false) ;
     });
 
     test("Should teste Command1  Error Result", () async{
         final command1 = Command1< bool,String>(getErrorResult1);
         expect(command1.running, false) ;
-        expect(command1.error, false) ;
-        expect(command1.completed, false) ;
         expect(command1.result, isNull) ;
+        expect(command1.completed, false) ;
+        expect(command1.error, false) ;
 
         await command1.execute("Parametro de entrada");
 
         expect(command1.running, false) ;
-        expect(command1.error, true) ;
-        expect(command1.completed, false) ;
         expect(command1.result, isA<Error>()) ;
+        expect(command1.completed, false) ;
+        expect(command1.error, true) ;
         // expect(command1.result!.asOk.value, "Parametro de entrada") ;
     });
    
